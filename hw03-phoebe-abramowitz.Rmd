@@ -6,25 +6,45 @@ output: github_document
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE, error= TRUE, fig.path='images/')
+
 ```
 
-## R Markdown
-
-This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
-
-When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
-
-```{r cars}
-summary(cars)
+```{bash Q2.1}
+#go based on working directory?
+cut -d "," -f 2 nba2017-roster.csv > team-names.txt
+sort -u team-names.txt > team-names.txt
+head -n 5 team-names.txt
 ```
 
-## Including Plots
+```{bash Q2.2}
+cut -d "," -f 3 nba2017-roster.csv > position-names.txt
+sort -u position-names.txt > position-names.txt
+head -n 5 position-names.txt
+```
+```{bash Q2.3}
 
-You can also embed plots, for example:
-
-```{r pressure, echo=FALSE}
-plot(pressure)
+cut -d "," -f 7 nba2017-roster.csv | tail +2 | sort -n | uniq -c | sort -r  >experience-counts.txt
+head -n 5 experience-counts.txt
+```
+```{bash Q2.4}
+grep "LAC\|team" nba2017-roster.csv > LAC.csv
+cat LAC.csv
+```
+```{bash Q2.5}
+grep "LAL" nba2017-roster.csv | cut -d "," -f 6 | sort -n | uniq -c | cat
+```
+```{bash Q2.6}
+grep "CLE" nba2017-roster.csv | wc -l
+```
+```{bash Q2.7}
+grep "GSW\|team" nba2017-roster.csv | cut -d "," -f 1,4-4,5-5 >gsw-height-weight.csv
+cat gsw-height-weight.csv
 ```
 
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+
+```{bash Q2.8}
+#How to add column names?
+cut -d "," -f 1,8 nba2017-roster.csv | sort -n -r -t "," -k2 | head -n 10 > top10-salaries.csv
+```
+
+
