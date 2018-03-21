@@ -1,7 +1,8 @@
 ## Title: Binomial Functions
-## Description:
-## Inputs
-## Outputs:
+## Description: Write functions that ultimately allow us to compute 
+##   Binomial Probabilities
+## Inputs: none
+## Outputs: none
 ##===========================================
 
 #' @title is_integer(x)
@@ -74,3 +75,56 @@ is_nonneg_integer <- function(x){
     return(FALSE)
   }
 } 
+
+#' @title is_probability(x)
+#' @description determines if x is a valid probability
+#' @param x number
+#' @return boolean
+
+is_probability <- function(x){
+  if(x<=1 & x>=0){
+    return(TRUE)
+  }
+  else{
+    return(FALSE)
+  }
+} 
+
+
+
+#' @title bin_factorial(x)
+#' @description calculates factorial
+#' @param x nonnegative integer
+#' @return number
+
+bin_factorial <- function(x){
+  fact=1
+  i=x
+  while(i>0){
+    fact <- fact*i
+    i <- i-1
+  }
+  return(fact)
+} 
+
+#' @title bin_combinations
+#' @description calculates the number of combos in which k successes can occur in n trials
+#' @param n,k nonnegative integer
+#' @return number
+
+bin_combinations <- function(n,k){
+  return(bin_factorial(n)/(bin_factorial(n-k)*bin_factorial(k)))
+} 
+
+bin_probability <- function(n,k,p){
+  q <- 1-p
+  if (is_probability(p)&is_positive_integer(n)&is_nonneg_integer(k)){
+    return( bin_combinations(n,k)*p^k*q^(n-k))
+  }
+  else{
+    print("error:invalid input(s)")
+  }
+  
+} 
+
+bin_probability(4,1,0.5)
