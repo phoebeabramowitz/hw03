@@ -6,11 +6,14 @@ output: github_document
 ---
 
 ```{r setup, include=FALSE}
-
+knitr::opts_chunk$set(echo=TRUE, error=TRUE, fig.path='images/')
 ```
+```{r}
+library(ggplot2)
+```
+#Question 2
 
 ```{bash Q2.1}
-#go based on working directory?
 cut -d "," -f 2 nba2017-roster.csv > team-names.txt
 sort -u team-names.txt > team-names.txt
 head -n 5 team-names.txt
@@ -43,8 +46,40 @@ cat gsw-height-weight.csv
 
 
 ```{bash Q2.8}
-#How to add column names?
-cut -d "," -f 1,8 nba2017-roster.csv | sort -n -r -t "," -k2 | head -n 10 > top10-salaries.csv
+
+cut -d "," -f 1,8 nba2017-roster.csv| head -n 1 >top10-salaries.csv
+cut -d "," -f 1,8 nba2017-roster.csv | sort -n -r -t "," -k2 | head -n 10 >> top10-salaries.csv
 ```
+#Question 3
+```{r}
+#source binomial-functions R script
+source('code/binomial-functions.R')
+bin_probability(10,3,1/6)
+sixes <- bin_distribution(10,0.25)
+ggplot(data=sixes)+
+  geom_point(aes(x=success,y=probability))+
+  ggtitle("Distribution of Sixes When Rolling 10 times")
+```
+```{r more than three heads}
+
+cum <- rep(0,3)
+for (i in 3:5){
+  if (i==3){
+  cum <- bin_probability(5,i,0.35)
+  }
+  else{
+    cum <- cum+ bin_probability(5,i,0.35)
+  }
+}
+cum
+```
+```{r}
+loaded_heads <- bin_distribution(15,0.35)
+ggplot(data=loaded_heads)+
+  geom_point(aes(x=success,y=probability))+
+  ggtitle("Distribution of Heads When Flipping 15 times",subtitle="Probability of Heads is 35%")
+```
+
+
 
 

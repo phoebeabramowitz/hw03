@@ -119,7 +119,7 @@ bin_combinations <- function(n,k){
 bin_probability <- function(n,k,p){
   q <- 1-p
   if (is_probability(p)&is_positive_integer(n)&is_nonneg_integer(k)){
-    return( bin_combinations(n,k)*p^k*q^(n-k))
+    return( bin_combinations(n,k)*(p^k)*q^(n-k))
   }
   else{
     print("error:invalid input(s)")
@@ -127,4 +127,15 @@ bin_probability <- function(n,k,p){
   
 } 
 
-bin_probability(4,1,0.5)
+bin_distribution <- function(trials, prob=0.5){
+  success <- seq(0,trials)
+  probability <- rep(0,trials)
+  for (i in 0:trials){
+    probability[i+1] <- bin_probability(trials,i,prob)
+  }
+  return(data.frame(success,probability))
+}
+
+
+
+
